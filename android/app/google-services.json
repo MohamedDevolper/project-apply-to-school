@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "500921480894",
+    "project_id": "flutter-test-b95a7",
+    "storage_bucket": "flutter-test-b95a7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500921480894:android:78f15d8a01effb784c10ef",
+        "android_client_info": {
+          "package_name": "com.example.eccomerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMpaLB7s2z4n2HvmvvplyKMvthxif3LDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
