@@ -1,15 +1,28 @@
 import 'package:basics_project_flutter/Image_path.dart';
+import 'package:basics_project_flutter/cooore/app_routes.dart';
+import 'package:basics_project_flutter/cooore/utils/dialogs-utilis.dart';
 import 'package:basics_project_flutter/cooore/utils/email_validate.dart';
 import 'package:basics_project_flutter/cooore/utils/image_utils.dart';
+import 'package:basics_project_flutter/database/user_access.dart';
 import 'package:basics_project_flutter/ui_TooDooo/widgets/custom_text_fprm_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
 
-  TextEditingController emailAdressControler = TextEditingController();
-  TextEditingController passwordControler = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+
    LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailAdressControler = TextEditingController();
+
+  TextEditingController passwordControler = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +30,12 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-       //title: Text('Kidney App',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Color(0xFF019874)),),
+        title: Image.asset(getImagePathByNamed('project.png'),
+          color: Color(0xFF019874),
+          // المسار إلى الصورة
+          height: 40, // ضبط ارتفاع الصورة
+        ),
+        centerTitle: true,
         backgroundColor:Colors.transparent,
         elevation: 0,
        leading: GestureDetector(
@@ -50,19 +68,19 @@ class LoginScreen extends StatelessWidget {
            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              const SizedBox(height: 8),
+              const SizedBox(height: 1),
               Row(
                 children: [
                   Image.asset(
-                    getImagePathByNamed('Vector.png'), // مسار صورة الأيقونة
-                    width: 45,
-                    height: 15,
+                    getImagePathByNamed('IMG_20241212_000339-removebg-preview.png'), // مسار صورة الأيقونة
+                    width: 95,
+                    height: 80,
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 1),
                   Image.asset(
-                    getImagePathByNamed('Kidney+.png'), // مسار صورة النص "Kidney+"
-                    width: 55,
-                    height: 15,
+                    getImagePathByNamed('project.png'), // مسار صورة النص "Kidney+"
+                    width: 100,
+                    height: 40,
                   ),
                 ],
 
@@ -71,16 +89,18 @@ class LoginScreen extends StatelessWidget {
                  alignment: Alignment.topCenter,
                    child: Text('                   Welcome Back!',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Color(0xFF000000)),)),
 
-               SizedBox(height: 8,),
+               SizedBox(height: 1,),
                Column(
                  crossAxisAlignment: CrossAxisAlignment.center,
                  children: [
-                   Image.asset(getImagePathByNamed('LoginScreen.png')),
+
+                   Image.asset(getImagePathByNamed('Sign In.png'),height: 220,),
+
                  ],
                ),
 
 
-              const SizedBox(height: 10), // مسافة بين الصور والـ Container
+              const SizedBox(height: 0), // مسافة بين الصور والـ Container
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.50, // 70% من الشاشة
                 child: Container(
@@ -89,8 +109,8 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   margin: EdgeInsets.symmetric(vertical: 5,horizontal: 3),
                   decoration: BoxDecoration(
-          
-          
+
+
                     color: Color(0xFFD9D9D9),
                     borderRadius: BorderRadius.circular(45), // الحواف الدائرية
                     border: Border.all(color: Color(0xFFD9D9D9), width: 8), // الإطار
@@ -100,10 +120,10 @@ class LoginScreen extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-          
-          
+
+
                           children: [
-          
+
                             Container(
                               alignment: Alignment.center,
                               child: const Text(
@@ -126,12 +146,12 @@ class LoginScreen extends StatelessWidget {
                             //     ),
                             //   ),
                             // ),
-          
+
                            // const SizedBox(height: 25),
 
                             //const SizedBox(height: 20),
 
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             Text('Enter E-mail:',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black),),
                             CustomTextFormField(
                               controller: emailAdressControler,
@@ -142,13 +162,13 @@ class LoginScreen extends StatelessWidget {
                                 }
                                 if(!isValidtionEmail(input)){
                                   return 'Sorry, E-mail Not Corect ';
-          
+
                                 }
                                 return null;
                               },
-          
+
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             Text('Enter Password:',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black),),
                             CustomTextFormField(
                               controller: passwordControler,
@@ -163,11 +183,11 @@ class LoginScreen extends StatelessWidget {
                               return null;
                             },
                             ),
-                          SizedBox(height:15,),
+                          SizedBox(height:8,),
                           Container(
                             alignment: Alignment.center,
                               child: Text('Forgot Passowrd', style: TextStyle(fontSize: 20,fontWeight: FontWeight.w900,color:Color(0xFF019874)),)),
-                          SizedBox(height: 20,),
+                          SizedBox(height: 10,),
                           //  const SizedBox(height: 20),
 
                            // const SizedBox(height:20),
@@ -176,9 +196,9 @@ class LoginScreen extends StatelessWidget {
                               alignment: Alignment.center,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  Login();
+                                  Login(emailAdressControler.text,passwordControler.text);
                                 },
-          
+
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:Color(0xFF019874) ,
                                   shape: RoundedRectangleBorder(
@@ -192,25 +212,20 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  'Dont have an account?',
-                                  style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w500),
+                                  'Don’t have an account?',
+                                  style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w500),
+
                                 ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: const Text(
-                                    ' Sign In',
-                                    style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
+                                TextButton(onPressed:(){
+                                  Navigator.pushReplacementNamed(context,AppRoute.registerRoute);
+
+                                }, child: Text('Create Account ',style: TextStyle(fontSize:  15,color: Colors.green,fontWeight: FontWeight.w500,decoration: TextDecoration.underline ),)),
+
                               ],
                             ),
                           ],
@@ -218,7 +233,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-          
+
               ),
             ],
           ),
@@ -250,12 +265,31 @@ class LoginScreen extends StatelessWidget {
     );
 
   }
-  void Login() {
+
+  void Login(String email,String password) async{
     if(formKey.currentState?.validate() == false){
       return;
 
     }
+    try {
+      DialogUtils.showLoadingDialoge(context, message: 'please waiting few moments');
+      final UserCredential credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password
+
+      );
+      UserAccess.getUser(credential.user!.uid);
+      DialogUtils.hideDailog(context);
+      DialogUtils.showMessageDialog(context,message:  'User logged in Successfully',postActionTitle: 'OK',posAction: (){
+        Navigator.pushReplacementNamed(context, AppRoute.gradutionRoute);
+      });
+    } on FirebaseAuthException catch (e) {
+      DialogUtils.hideDailog(context);
+      if (e.code == 'user-not-found'||e.code == 'wrong-password'|| e.code == 'invalid-credential') {
+        DialogUtils.showMessageDialog(context, message:'wrong E-mail or Password!.',postActionTitle: 'TryAgain',
+         );
+
+      }
+    }
   }
-
-
 }
